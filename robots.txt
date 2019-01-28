@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://renzhe00.github.io/sitemap.xml
