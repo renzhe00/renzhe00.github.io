@@ -3,29 +3,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://renzhe00.github.io/post/some-content/</loc>
-    <lastmod>2019-01-29T00:01:02+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://renzhe00.github.io/post/qqqq/</loc>
-    <lastmod>2019-01-28T23:59:54+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://renzhe00.github.io/post/first/</loc>
-    <lastmod>2019-01-28T23:53:11+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://renzhe00.github.io/post/test/</loc>
-    <lastmod>2019-01-28T23:28:34+08:00</lastmod>
+    <loc>https://renzhe00.github.io/post/%E5%8D%95%E4%B8%AA%E7%A5%9E%E7%BB%8F%E5%85%83%E7%9A%84-logistic-regression/</loc>
+    <lastmod>2019-01-29T19:49:46+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -38,14 +17,14 @@
   
   <url>
     <loc>https://renzhe00.github.io/</loc>
-    <lastmod>2019-01-29T00:01:02+08:00</lastmod>
+    <lastmod>2019-01-29T19:49:46+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://renzhe00.github.io/post/</loc>
-    <lastmod>2019-01-29T00:01:02+08:00</lastmod>
+    <lastmod>2019-01-29T19:49:46+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

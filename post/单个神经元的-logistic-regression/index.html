@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Logistic_Regression_with_a_Neural_Network - Even - A super concise theme for Hugo</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="renzhe" /><meta name="description" content="单个神经元的 Logistic Regression Logistic Regression $$ z^{(i)} = w^T x^{(i)} &#43; b \tag{1} $$ $$ \hat{y}^{(i)} = a^{(i)} = sigmoid(z^{(i)})\tag{2} $$ $$ \mathcal{L}(a^{(i)}, y^{(i)}) = - y^{(i)} \log(a^{(i)}) - (1-y^{(i)} ) \log(1-a^{(i)})\tag{3} $$ 成本函数： $$ J = \frac{1}{m} \sum_{i=1}^m \mathcal{L}(a^{(i)}, y^{(i)})\tag{4} $$ 激活函数采用 sigmoid 函数： $$ sigmoid( w^T x &#43; b) = \frac{1}{1 &#43;" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://renzhe00.github.io/post/%E5%8D%95%E4%B8%AA%E7%A5%9E%E7%BB%8F%E5%85%83%E7%9A%84-logistic-regression/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Logistic_Regression_with_a_Neural_Network" />
+<meta property="og:description" content="单个神经元的 Logistic Regression Logistic Regression $$ z^{(i)} = w^T x^{(i)} &#43; b \tag{1} $$ $$ \hat{y}^{(i)} = a^{(i)} = sigmoid(z^{(i)})\tag{2} $$ $$ \mathcal{L}(a^{(i)}, y^{(i)}) = - y^{(i)} \log(a^{(i)}) - (1-y^{(i)} ) \log(1-a^{(i)})\tag{3} $$ 成本函数： $$ J = \frac{1}{m} \sum_{i=1}^m \mathcal{L}(a^{(i)}, y^{(i)})\tag{4} $$ 激活函数采用 sigmoid 函数： $$ sigmoid( w^T x &#43; b) = \frac{1}{1 &#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://renzhe00.github.io/post/%E5%8D%95%E4%B8%AA%E7%A5%9E%E7%BB%8F%E5%85%83%E7%9A%84-logistic-regression/" /><meta property="article:published_time" content="2019-01-29T19:49:46&#43;08:00"/>
+<meta property="article:modified_time" content="2019-01-29T19:49:46&#43;08:00"/>
+
+<meta itemprop="name" content="Logistic_Regression_with_a_Neural_Network">
+<meta itemprop="description" content="单个神经元的 Logistic Regression Logistic Regression $$ z^{(i)} = w^T x^{(i)} &#43; b \tag{1} $$ $$ \hat{y}^{(i)} = a^{(i)} = sigmoid(z^{(i)})\tag{2} $$ $$ \mathcal{L}(a^{(i)}, y^{(i)}) = - y^{(i)} \log(a^{(i)}) - (1-y^{(i)} ) \log(1-a^{(i)})\tag{3} $$ 成本函数： $$ J = \frac{1}{m} \sum_{i=1}^m \mathcal{L}(a^{(i)}, y^{(i)})\tag{4} $$ 激活函数采用 sigmoid 函数： $$ sigmoid( w^T x &#43; b) = \frac{1}{1 &#43;">
+
+
+<meta itemprop="datePublished" content="2019-01-29T19:49:46&#43;08:00" />
+<meta itemprop="dateModified" content="2019-01-29T19:49:46&#43;08:00" />
+<meta itemprop="wordCount" content="450">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Logistic_Regression_with_a_Neural_Network"/>
+<meta name="twitter:description" content="单个神经元的 Logistic Regression Logistic Regression $$ z^{(i)} = w^T x^{(i)} &#43; b \tag{1} $$ $$ \hat{y}^{(i)} = a^{(i)} = sigmoid(z^{(i)})\tag{2} $$ $$ \mathcal{L}(a^{(i)}, y^{(i)}) = - y^{(i)} \log(a^{(i)}) - (1-y^{(i)} ) \log(1-a^{(i)})\tag{3} $$ 成本函数： $$ J = \frac{1}{m} \sum_{i=1}^m \mathcal{L}(a^{(i)}, y^{(i)})\tag{4} $$ 激活函数采用 sigmoid 函数： $$ sigmoid( w^T x &#43; b) = \frac{1}{1 &#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">renzhe</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">renzhe</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Logistic_Regression_with_a_Neural_Network</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-29 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#单个神经元的-logistic-regression">单个神经元的 Logistic Regression</a>
+<ul>
+<li>
+<ul>
+<li><a href="#logistic-regression">Logistic Regression</a></li>
+<li><a href="#激活函数采用-sigmoid-函数">激活函数采用 sigmoid 函数：</a></li>
+<li><a href="#初始化参数">初始化参数：</a></li>
+<li><a href="#前向和后向传播">前向和后向传播</a></li>
+<li><a href="#更新参数">更新参数</a></li>
+<li><a href="#预测结果">预测结果</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="单个神经元的-logistic-regression">单个神经元的 Logistic Regression</h1>
+
+<h3 id="logistic-regression">Logistic Regression</h3>
+
+<p>$$
+z^{(i)} = w^T x^{(i)} + b \tag{1}
+$$</p>
+
+<p>$$
+\hat{y}^{(i)} = a^{(i)} = sigmoid(z^{(i)})\tag{2}
+$$</p>
+
+<p>$$
+\mathcal{L}(a^{(i)}, y^{(i)}) =  - y^{(i)}  \log(a^{(i)}) - (1-y^{(i)} )  \log(1-a^{(i)})\tag{3}
+$$</p>
+
+<p>成本函数：
+$$
+J = \frac{1}{m} \sum_{i=1}^m \mathcal{L}(a^{(i)}, y^{(i)})\tag{4}
+$$</p>
+
+<h3 id="激活函数采用-sigmoid-函数">激活函数采用 sigmoid 函数：</h3>
+
+<p>$$
+sigmoid( w^T x + b) = \frac{1}{1 + e^{-(w^T x + b)}}\tag{5}
+$$</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">s</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="初始化参数">初始化参数：</h3>
+
+<p>初始化权重矩阵 w 和参数 b</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">def</span> <span class="nf">initialize_with_zeros</span><span class="p">(</span><span class="n">dim</span><span class="p">):</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">dim</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="前向和后向传播">前向和后向传播</h3>
+
+<ol>
+<li><p>输入 X</p></li>
+
+<li><p>计算： $A = \sigma(w^T X + b) = (a^{(1)}, a^{(2)}, &hellip;, a^{(m-1)}, a^{(m)})$</p></li>
+
+<li><p>计算成本函数：$J = -\frac{1}{m}\sum_{i=1}^{m}y^{(i)}\log(a^{(i)})+(1-y^{(i)})\log(1-a^{(i)})$</p></li>
+
+<li><p>计算偏导数：
+$$
+\frac{\partial J}{\partial w} = \frac{1}{m}X(A-Y)^T\tag{6}
+$$</p></li>
+</ol>
+
+<p>$$
+   \frac{\partial J}{\partial b} = \frac{1}{m} \sum_{i=1}^m (a^{(i)}-y^{(i)})\tag{7}
+   $$</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">def</span> <span class="nf">propagate</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="c1"># FORWARD PROPAGATION (FROM X TO COST)</span>
+    <span class="c1"># compute activation</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>                                    
+    <span class="c1"># compute cost</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">A</span><span class="p">))</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Y</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">A</span><span class="p">))))</span><span class="o">/</span><span class="n">m</span>                                
+    <span class="c1"># BACKWARD PROPAGATION</span>
+    <span class="n">dw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="p">(</span><span class="n">A</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">m</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">A</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span><span class="o">/</span><span class="n">m</span>
+    
+    <span class="n">grads</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;dw&#34;</span><span class="p">:</span> <span class="n">dw</span><span class="p">,</span>
+             <span class="s2">&#34;db&#34;</span><span class="p">:</span> <span class="n">db</span><span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">grads</span><span class="p">,</span> <span class="n">cost</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="更新参数">更新参数</h3>
+
+<p>根据成本函数 $J$ 更新参数 $w$ 和 $b$，更新规则如下,其中 $\theta$ 是学习速率：
+$$
+\theta = \theta - \alpha \text{ } d\theta\tag{8}
+$$</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">num_iterations</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">print_cost</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+    <span class="n">costs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
+        <span class="c1"># Cost and gradient calculation</span>
+        <span class="n">grads</span><span class="p">,</span> <span class="n">cost</span> <span class="o">=</span> <span class="n">propagate</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+   
+        <span class="n">dw</span> <span class="o">=</span> <span class="n">grads</span><span class="p">[</span><span class="s2">&#34;dw&#34;</span><span class="p">]</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">grads</span><span class="p">[</span><span class="s2">&#34;db&#34;</span><span class="p">]</span>
+        
+        <span class="c1"># update</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">w</span><span class="o">-</span><span class="n">learning_rate</span><span class="o">*</span><span class="n">dw</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="o">-</span><span class="n">learning_rate</span><span class="o">*</span><span class="n">db</span>
+        
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">costs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+        
+        <span class="c1"># Print the cost every 100 training iterations</span>
+        <span class="k">if</span> <span class="n">print_cost</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span> <span class="p">(</span><span class="s2">&#34;Cost after iteration </span><span class="si">%i</span><span class="s2">: </span><span class="si">%f</span><span class="s2">&#34;</span> <span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">cost</span><span class="p">))</span>
+    
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;w&#34;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span>
+              <span class="s2">&#34;b&#34;</span><span class="p">:</span> <span class="n">b</span><span class="p">}</span>
+    
+    <span class="n">grads</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;dw&#34;</span><span class="p">:</span> <span class="n">dw</span><span class="p">,</span>
+             <span class="s2">&#34;db&#34;</span><span class="p">:</span> <span class="n">db</span><span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">grads</span><span class="p">,</span> <span class="n">costs</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="预测结果">预测结果</h3>
+
+<ol>
+<li>计算 $\hat{Y} = A = \sigma(w^T X + b)$</li>
+<li>将 a 转化为预测结果 1（if activation &gt; 0.5）或者 0（if activation &lt;= 0.5）</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">renzhe</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-01-29</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="renzhe.gm@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/renzhe00" class="iconfont icon-github" title="github"></a>
+  <a href="https://renzhe00.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">author.name</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
